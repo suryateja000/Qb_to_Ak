@@ -77,13 +77,3 @@ GOOGLE_API_KEY=your_api_key_here
 ```bash
 streamlit run main.py
 ```
-
-## ☁️ Deployment
-
-When deploying to Streamlit Community Cloud:
-1. Do not commit your `.env` file.
-2. Go to your App Settings -> **Secrets** in the Streamlit Cloud dashboard.
-3. Add your secret exactly as it appears in the `.env` file:
-```toml
-GOOGLE_API_KEY="your_api_key_here"
-```
