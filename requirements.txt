@@ -3,6 +3,8 @@ langchain
 langchain-community
 langchain-core
 langchain-google-genai
+langchain-text-splitters
 pypdf
 fpdf
 faiss-cpu
+python-dotenv
