@@ -3,11 +3,14 @@ Answer generation tool — uses RAG or general knowledge.
 """
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.chains import create_retrieval_chain
+from langchain_core.runnables import RunnablePassthrough
 from src.models.llm_client import get_llm
 from src.utils.config import RETRIEVER_K
 from src.prompts.system_prompts import QA_SYSTEM_PROMPT, GENERAL_QA_PROMPT
+
+
+def format_docs(docs):
+    return "\n\n".join(doc.page_content for doc in docs)
 
 
 def generate_answer(question: str, vector_store, api_key: str) -> str:
@@ -17,10 +20,14 @@ def generate_answer(question: str, vector_store, api_key: str) -> str:
     if vector_store:
         retriever = vector_store.as_retriever(search_kwargs={"k": RETRIEVER_K})
         qa_prompt = PromptTemplate.from_template(QA_SYSTEM_PROMPT)
-        document_chain = create_stuff_documents_chain(llm, qa_prompt)
-        retrieval_chain = create_retrieval_chain(retriever, document_chain)
-        response_dict = retrieval_chain.invoke({"input": question})
-        return response_dict['answer']
+        
+        rag_chain = (
+            {"context": retriever | format_docs, "input": RunnablePassthrough()}
+            | qa_prompt
+            | llm
+            | StrOutputParser()
+        )
+        return rag_chain.invoke(question)
     else:
         prompt = PromptTemplate.from_template(GENERAL_QA_PROMPT)
         chain = prompt | llm | StrOutputParser()
