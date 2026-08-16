@@ -102,8 +102,12 @@ st.markdown("""
         line-height: 1.6;
     }
     
-    /* Hide default elements */
-    #MainMenu, footer, header[data-testid="stHeader"] { display: none !important; }
+    /* Hide default elements but keep header for mobile sidebar toggle */
+    #MainMenu, footer { display: none !important; }
+    header[data-testid="stHeader"] {
+        background: transparent !important;
+        backdrop-filter: none !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
