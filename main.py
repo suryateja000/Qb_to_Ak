@@ -108,6 +108,62 @@ st.markdown("""
         background: transparent !important;
         backdrop-filter: none !important;
     }
+
+    /* ── Mobile Sidebar Toggle ── */
+    /* Make the sidebar expand arrow prominent on mobile */
+    [data-testid="stSidebarCollapsedControl"] {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        top: 0.7rem !important;
+        left: 0.7rem !important;
+        z-index: 999999 !important;
+        background-color: var(--accent) !important;
+        border-radius: 50% !important;
+        width: 40px !important;
+        height: 40px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4) !important;
+        border: none !important;
+    }
+    [data-testid="stSidebarCollapsedControl"] button {
+        color: white !important;
+        background: transparent !important;
+        border: none !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    [data-testid="stSidebarCollapsedControl"] svg {
+        fill: white !important;
+        stroke: white !important;
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    /* Sidebar collapse button (inside open sidebar) */
+    [data-testid="stSidebarCollapseButton"] button,
+    [data-testid="collapsedControl"] button {
+        background-color: var(--border) !important;
+        border-radius: 50% !important;
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    /* Ensure sidebar is accessible on mobile */
+    @media (max-width: 768px) {
+        [data-testid="stSidebar"] {
+            z-index: 999998 !important;
+        }
+        [data-testid="stSidebarCollapsedControl"] {
+            top: 0.5rem !important;
+            left: 0.5rem !important;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
